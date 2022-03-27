@@ -1,0 +1,43 @@
+<!-- component -->
+<div class="md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
+    <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
+    <div class="xl:w-2/5 md:w-1/2 lg:ml-8 md:ml-6 md:mt-0 mt-6">
+      <div class="border-b border-dark-200 pb-6">
+        <p class="text-sm leading-none text-dark  ">{{client.name}}</p>
+        <h1 class="lg:text-2xl text-xl font-semibold lg:leading-6 leading-7 text-dark-800 dark:text-white mt-2">Balenciaga Signature Sweatshirt</h1>
+      </div>
+      <div class="py-4 border-b border-dark-200 flex items-center justify-between">
+        <p class="text-base leading-4 text-dark-800 dark:text-dark-300">Referenece</p>
+        <div class="flex items-center justify-center">
+          <p class="text-sm leading-none text-dark-600 dark:text-dark-300 mr-3">{{client.reference}}</p>
+         
+        </div>
+      </div>
+      <div class="py-4 border-b border-dark-200 flex items-center justify-between">
+        <p class="text-base leading-4 text-dark-800 dark:text-dark-300">Fluide</p>
+        <div class="flex items-center justify-center">
+          <p class="text-sm leading-none text-dark-600 dark:text-dark-300 mr-3">{{client.fluide}}</p>
+         
+        </div>
+      </div>
+      <div>
+        <h3 class="font-semibold">
+          Emails :
+        </h3>
+
+        <p *ngFor="let a of client.emails" class="text-base leading-4  text-dark-600 dark:text-dark-300">{{a}}</p>
+
+      </div>
+  
+      <div>
+        <div class="border-b py-4 border-dark-200">
+          <div data-menu class="flex justify-between items-center cursor-pointer">
+            <p class="text-base leading-4 text-dark-800 dark:text-dark-300 font-semibold">Compte information</p>
+            <p>N° : {{ client.n_compte}}</p>
+            <p>Date : {{ client.date_compte}}</p>
+          </div>
+          <div class="hidden pt-4 text-base leading-normal pr-12 mt-4 text-dark-600 dark:text-dark-300" id="sect">If you have any questions on how to return your item to us, contact us.</div>
+        </div>
+      </div>
+    </div>
+  </div>

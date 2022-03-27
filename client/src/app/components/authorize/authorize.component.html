@@ -1,0 +1,55 @@
+<!-- overlay -->
+<div
+  id="modal_overlay"
+  class="absolute inset-0 bg-black bg-opacity-30 h-screen w-full flex justify-center items-start md:items-center pt-10 md:pt-0"
+>
+  <!-- modal -->
+  <div
+    id="modal"
+    class="transform relative md:w-2/4 bg-white rounded shadow-lg transition-opacity transition-transform duration-300 bg-white"
+  >
+    <!-- button close -->
+
+    <!-- header -->
+    <div class="px-4 py-3">
+      <h2 class="text-md text-gray-400 text-center">
+      </h2>
+
+      <button
+        class="text-gray-500 block md:mt-0 block flex items-center capitalize"
+        style="position: absolute; top: 18px; left: 94%"
+        (click)="closeModal()"
+      >
+        <i class="fas fa-times mr-2"></i>
+      </button>
+    </div>
+
+    <!-- body -->
+    <div class="bg-white p-4" style="height: calc(100% - 67px)">
+      <div class="w-full mt-4">
+        <form>
+          <h4 class="text-grey-dark mb-2">
+            voullez vous vraiment supprimer le client ?
+          </h4>
+          <div class="mt-6 pt-3 flex justify-center">
+            <button
+            (click)="closeModal()"
+              class="rounded-xl text-black uppercase px-3 py-1 hover:shadow-inner border border-gray-300 transition-all duration-300"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="ml-2 rounded-xl uppercase text-black px-3 py-1 hover:shadow-inner border bg-gray-300 transition-all duration-300"
+              type="button"
+              (click)="confirm()"
+            >
+              Confirmer
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- details -->
+    </div>
+  </div>
+</div>

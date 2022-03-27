@@ -1,0 +1,15 @@
+.content{
+    padding-left: 255px;
+    transition: .5s ease-in-out;
+}
+.sidebar{
+transition: .5s ease-in-out;
+}
+@media screen and (max-width: 768px) {
+    .content{
+        padding-left: 65px;
+    }
+    .sidebar{
+        width: 4rem;
+    }
+}
