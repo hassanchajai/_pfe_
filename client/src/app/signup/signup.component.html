@@ -1,6 +1,6 @@
 <form
   class="flex flex-col justify-center items-center h-screen bg-[#FAFFD7]"
-  [formGroup]="formGroup"
+
   (submit)="submit()"
 >
   <div class="max-w-md w-full bg-white rounded p-6 space-y-4">
@@ -21,50 +21,47 @@
         class="w-full p-1 pl-8 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
         type="text"
         placeholder="name"
-        formControlName="name"
+      [(ngModel)]="name"
+      [ngModelOptions]="{standalone: true}"
       />
       <div class="absolute inset-y-0 left-0 flex items-center px-2">
        
         <i class="fas fa-user-circle  text-gray-600"></i>
       </div>
     </div>
-    <div *ngIf="errors.name" class="text-sm text-red-500">
-      {{ errors.name.message }}
-    </div>
+
     <div class="relative">
       <input
         class="w-full p-1 pl-8 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
-        type="text"
+        type="email"
         placeholder="Email"
-        formControlName="email"
-
+        name="email"
+        [(ngModel)]="email"
+        [ngModelOptions]="{standalone: true}"
       />
       <div class="absolute inset-y-0 left-0 flex items-center px-2">
        
         <i class="fas fa-user-circle  text-gray-600"></i>
       </div>
     </div>
-    <div *ngIf="errors.email" class="text-sm text-red-500">
-      {{ errors.email.message }}
-    </div>
+  
     <div class="relative">
       <input
         class="w-full p-1 pl-8  text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600"
         type="password"
         placeholder="Mot de passe"
-        formControlName="password"
+        name="password"
+        [(ngModel)]="password"
       />
       <div class="absolute inset-y-0 left-0 flex items-center px-2">
         <i class="fas fa-lock  text-gray-600"></i>
       </div>
     </div>
-    <div *ngIf="errors.password" class="text-sm text-red-500">
-      {{ errors.password.message }}
-    </div>
 
     <div>
       <button
         class="w-full p-2 bg-[#fabb13] rounded text-sm font-bold text-gray-50 transition duration-200"
+        type="submit"
       >
         S'inscrire
       </button>

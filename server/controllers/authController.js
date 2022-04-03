@@ -30,14 +30,16 @@ exports.login = async (req, res, next) => {
 
     // 2) check if user exist and password is correct
     const user = await User.findOne({
-      email,
-    }).select("+password");
-
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+     where:{ email},
+    });
+    // console.log(email)
+ const isValid = bcrypt.compareSync(password, user.dataValues.password);
+ console.log(isValid,user.dataValues.password);
+    if (!user || !isValid) {
       return next(
         new AppError(401, "fail", "Email or Password is wrong"),
         req,
-        res,
+        res, 
         next,
       );
     }
@@ -46,7 +48,7 @@ exports.login = async (req, res, next) => {
     const token = createToken(user.id);
 
     // Remove the password from the output
-    user.password = undefined;
+    // user.password = undefined;
 
     res.status(200).json({
       status: "success",
@@ -61,6 +63,7 @@ exports.login = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
+    console.log(req.body);
     const user = new User({
       name: req.body.name,
       email: req.body.email,

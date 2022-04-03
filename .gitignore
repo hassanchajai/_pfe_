@@ -8,6 +8,7 @@ client/dist
 client/tmp
 client/out-tsc
 client/bazel-out
+client/.angular/cache
 
 # Node
 client/node_modules

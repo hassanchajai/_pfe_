@@ -7,7 +7,6 @@ module.exports = (sequelize, Sequelize) => {
         },
         email: {
             type: Sequelize.STRING,
-            allowNull: false
         },
         password: {
             type: Sequelize.STRING,
@@ -16,8 +15,8 @@ module.exports = (sequelize, Sequelize) => {
                 // console.log(value);
                 const salt =  bcrypt.genSaltSync(10);
 
-                let hashpwdpassword =  bcrypt.hashSync(value, salt);
-
+                let hashpwdpassword =  bcrypt.hashSync(value, 12);
+            console.log(hashpwdpassword);
                 this.setDataValue('password', hashpwdpassword);
               }
         },

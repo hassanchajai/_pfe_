@@ -18,9 +18,9 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // if(localStorage.getItem('token')){
-    //   this.router.navigate(["/"])
-    // }
+    if(localStorage.getItem('token')){
+      this.router.navigate(["/"])
+    }
     this.form = this.formBuilder.group({
       email: '',
       password: '',
@@ -28,7 +28,9 @@ export class LoginComponent implements OnInit {
   }
   submit(){
     this.errorMessage =  ""
-
+    console.log('====================================');
+    console.log(this.form.value);
+    console.log('====================================');
     this.http.post('http://localhost:8080/api/v1/users/signin', this.form.getRawValue()).subscribe((e:any)=>{
       localStorage.setItem('token', e?.token);
       this.router.navigate(["/"])
