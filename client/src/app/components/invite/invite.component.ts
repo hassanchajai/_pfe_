@@ -41,7 +41,7 @@ export class InviteComponent implements OnInit {
       this.errorMessage="certains e-mails ne sont pas valides"
       return;
     }
-    this.http.post('http://localhost:8080/api/v1/clients',{...this.form.getRawValue(),emails:seperateEmailsFromString(this.form.value.emails)},{
+    this.http.post('http://localhost:8080/api/v1/clients',{...this.form.getRawValue(),emails:JSON.stringify(seperateEmailsFromString(this.form.value.emails))},{
       headers:{
         'Content-Type':'application/json',
         "Authorization":"Bearer "+localStorage.getItem('token')

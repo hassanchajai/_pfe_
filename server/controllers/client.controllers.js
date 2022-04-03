@@ -1,10 +1,10 @@
 
-const Client = require("../models/Client.model");
+const { Client } = require("../models/index");
 
 
 // get all Clients
 exports.get_all = function (req, res) {
-  Client.find({})
+  Client.findAll()
     .then((Clients) => {
       // Check if Clients exists
 
@@ -16,10 +16,13 @@ exports.get_all = function (req, res) {
       } else {
         return res.status(200).send({
           status: true,
-          Clients: Clients,
+          Clients: Clients.map(({ emails, ...rest }) => ({
+            ...rest.dataValues,
+            emails: JSON.parse(emails)
+          }))
         });
       }
-    }) 
+    })
     .catch(() =>
       res.status(500).send({
         status: false,
@@ -33,7 +36,11 @@ exports.get_one = function (req, res) {
 
 
   // Find account with matching id
-  Client.findById(req.params.id)
+  Client.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
     .then((Client) => {
       if (!Client) {
         res.status(400).send({
@@ -43,7 +50,10 @@ exports.get_one = function (req, res) {
       } else {
         return res.status(200).send({
           status: true,
-          Client: Client,
+          Client: {
+            ...Client.dataValues,
+            emails: JSON.parse(Client.emails),
+          },
         });
       }
     })
@@ -58,7 +68,7 @@ exports.get_one = function (req, res) {
 // add a Client
 
 exports.add = async function (req, res) {
-  let newClient = new Client({...req.body});
+  let newClient = new Client({ ...req.body });
   newClient
     .save()
     .then((Client) => {
@@ -77,36 +87,35 @@ exports.add = async function (req, res) {
 };
 
 // update a Client
-exports.update =async function (req, res) {
+exports.update = async function (req, res) {
 
-//   get the old proudct with id 
-  const oldClient = await Client.findById(req.params.id);
-  if (!oldClient) {
-    return res.status(404).send({
-      status: false,
-      message: "cannot find the Client with id " + req.params.id,
-    });
-  }
-    oldClient.update( req.body, async (err, docs) => {
-    if (err) {
-      return res.status(200).send({
-        status: false,
-        message: err,
-      });
+  //   get the old proudct with id 
+console.log(req.body);
+  Client.update(req.body, {
+    where: {
+      id: req.params.id
     }
-
+  }). then(() => {
+ 
     return res.status(200).send({
       status: true,
       message: "Client updated succefully!",
     });
-  });
+  }).
+    catch(() =>
+      res.status(500).send({
+        status: false,
+        message: "Error while updating Client",
+      })
+    );
+  ;
 };
 
 // // delete a Client: change status to deleted
 exports.delete = function (req, res) {
 
   // Find Client by id
-  Client.findById(req.params.id)
+  Client.destroy({ where: { id: req.params.id } })
     .then((Client) => {
       if (!Client) {
         res.status(400).send({
@@ -114,21 +123,14 @@ exports.delete = function (req, res) {
           message: "Client doesn't exist",
         });
       } else {
-    
-        Client
-          .delete()
-          .then(() =>
-            res.status(200).send({
+
+       
+          return  res.status(200).send({
               status: true,
               message: "Client successfuly deleted",
             })
-          )
-          .catch(() =>
-            res.status(500).send({
-              status: false,
-              message: "error while saving changes to db",
-            })
-          );
+          
+       
       }
     })
     .catch(() =>
@@ -140,4 +142,3 @@ exports.delete = function (req, res) {
 };
 
 
-  

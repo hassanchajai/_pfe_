@@ -11,23 +11,18 @@ process.on('uncaughtException', err => {
 });
 
 const app = require('./app');
-const { connectDB } = require('./config/db');
-
-connectDB().then(() => {
-    console.log('Connected to database');
-    app.listen(port, () => {
-        console.log(`Application is running on port ${port}`);
-    });
-}).catch(err => {
-    console.log(err.message || err);
-})
+const db = require("./models/index")
+// db.sequelize.sync({force:true})
 
 // Start the server
 const port = process.env.PORT;
+app.listen(port, () => {
+    console.log(`Application is running on port ${port}`);
+});
 
 process.on('unhandledRejection', err => {
     console.log('UNHANDLED REJECTION!!!  shutting down ...');
-    console.log(err.name, err.message);
+    console.log(err.name, err.messaége);
     server.close(() => {
         process.exit(1);
     });

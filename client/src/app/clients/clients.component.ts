@@ -90,7 +90,7 @@ export class ClientsComponent implements OnInit {
   }
   confirm(): void {
     this.http
-      .delete(`http://localhost:8080/api/v1/clients/${this.selectedClient._id}`)
+      .delete(`http://localhost:8080/api/v1/clients/${this.selectedClient.id}`)
       .subscribe((res: any) => {
         this.Clients = this.Clients.filter(
           (client) => client._id != this.selectedClient._id
@@ -101,7 +101,7 @@ export class ClientsComponent implements OnInit {
   }
   confirmEditEmail(emails: string) {
     this.http
-      .put(`http://localhost:8080/api/v1/clients/${this.selectedClient._id}`, {
+      .put(`http://localhost:8080/api/v1/clients/${this.selectedClient.id}`, {
         emails: seperateEmailsFromString(emails),
       })
       .subscribe((res: any) => {

@@ -32,7 +32,7 @@ export class ModifyComponent implements OnInit {
       this.errorMessage="certains e-mails ne sont pas valides"
       return;
     }
-    this.http.put(`http://localhost:8080/api/v1/clients/${this.client._id}`, { ...this.form.getRawValue(), emails: this.form.value.emails.split('\n') }, {
+    this.http.put(`http://localhost:8080/api/v1/clients/${this.client.id}`, { ...this.form.getRawValue(), emails: JSON.stringify(this.form.value.emails.split('\n')) }, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token'),

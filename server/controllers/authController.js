@@ -1,8 +1,8 @@
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
-const User = require("../models/userModel");
+const { User, } = require("../models/index");
 const AppError = require("../utils/appError");
-
+const bcrypt = require('bcryptjs')
 const createToken = id => {
   return jwt.sign(
     {
@@ -33,7 +33,7 @@ exports.login = async (req, res, next) => {
       email,
     }).select("+password");
 
-    if (!user || !(await user.correctPassword(password, user.password))) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return next(
         new AppError(401, "fail", "Email or Password is wrong"),
         req,
@@ -51,8 +51,8 @@ exports.login = async (req, res, next) => {
     res.status(200).json({
       status: "success",
       token,
-        user,
-      
+      user,
+
     });
   } catch (err) {
     next(err);
@@ -61,17 +61,15 @@ exports.login = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const user = await User.create({
+    const user = new User({
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
-      role: req.body.role,
     });
-
+    await user.save()
     const token = createToken(user.id);
 
-    user.password = undefined;
+    // user.password = undefined;
 
     res.status(201).json({
       status: "success",
